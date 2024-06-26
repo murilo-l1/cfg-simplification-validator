@@ -10,6 +10,7 @@ const rules1 = {
 }
 const grammar1 = new CFG.Grammar('S', rules1);
 
+// não contém a epata 1
 const rules2 = {
     'S': ['X','x'],
     'X': ['y', 'xx', 'xSx', 'S'],
@@ -17,8 +18,7 @@ const rules2 = {
 };
 const grammar2 = new CFG.Grammar('S', rules2);
 
-
-// não contém a etapa 2
+// não contém etapa 2
 const rules3 = {
     'Q': ['QR', 'qP', 'ε'],
     'P': ['pQ', 'p'],
@@ -34,5 +34,6 @@ const rules4 = {
     'O': ['oO', 'o', 'ε'],
 }
 const grammar4 = new CFG.Grammar('M', rules4);
+
 
 module.exports = {grammar1, grammar2, grammar3, grammar4};

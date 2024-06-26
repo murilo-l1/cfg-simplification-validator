@@ -56,5 +56,4 @@ function extractReachableVariables(grammar) {
     return reachable;
 }
 
-
 module.exports = {extractTerminals, extractVariables, extractReachableVariables};

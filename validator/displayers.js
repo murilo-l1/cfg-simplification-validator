@@ -1,21 +1,6 @@
 
 const {extractTerminals} = require('./extractors');
 
-const createTerminalsOutPut = (grammar) => {
-    let terminals = extractTerminals(grammar);
-    let terminalsOutput = '';
-
-    if(terminals.indexOf('ε') === -1){
-        terminalsOutput = '{' + terminals.toString() + '}';
-    }
-    else{
-        terminals = terminals.filter(terminal => terminal !== 'ε');
-        terminalsOutput = '{' + terminals.toString() + '}*';
-    }
-
-    return terminalsOutput;
-}
-
 function displayGrammar(grammar, grammarNum) {
 
     const terminalsOutput = createTerminalsOutPut(grammar);
@@ -34,10 +19,10 @@ function displayGrammar(grammar, grammarNum) {
     return output;
 }
 
-function displayProductions(nullProductions) {
+function displayProductions(grammarProductions) {
     let output = '';
 
-    for (const [key, productions] of Object.entries(nullProductions)) {
+    for (const [key, productions] of Object.entries(grammarProductions)) {
         const formattedProductions = productions.join(' | ');
         output += `  ${key} → ${formattedProductions},\n`;
     }
@@ -47,13 +32,34 @@ function displayProductions(nullProductions) {
 }
 
 const generateStepResult = (obj) => {
-    if(Object.keys(obj).length > 0){
-        console.log("A(s) seguinte(s) produções devem ser alteradas: ");
+    const length = Object.keys(obj).length;
+
+    if(length === 1) {
+        console.log("A seguinte produção deve ser removida: ");
+        console.log(displayProductions(obj));
+    }
+    else if(length > 1) {
+        console.log("As seguintes produções devem ser removidas: ");
         console.log(displayProductions(obj));
     }
     else{
-        console.log("Etapa não aplicável !");
+        console.log("Etapa não aplicável!");
     }
 }
 
-module.exports = {displayGrammar, displayProductions, generateStepResult };
+const createTerminalsOutPut = (grammar) => {
+    let terminals = extractTerminals(grammar);
+    let terminalsOutput = '';
+
+    if(terminals.indexOf('ε') === -1){
+        terminalsOutput = '{' + terminals.toString() + '}';
+    }
+    else{
+        terminals = terminals.filter(terminal => terminal !== 'ε');
+        terminalsOutput = '{' + terminals.toString() + '}*';
+    }
+
+    return terminalsOutput;
+}
+
+module.exports = {displayGrammar, generateStepResult };
